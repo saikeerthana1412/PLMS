@@ -191,36 +191,6 @@ import os
 import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Get the full path to the courses.pkl file
-current_directory = os.path.dirname(os.path.abspath(__file__))
-courses_pkl_path = os.path.join(current_directory, 'courses.pkl')
-
-# # Load the courses.pkl file with error handling
-# with open(courses_pkl_path, 'rb') as f:
-#     # courses_list = pickle.load(f, encoding='latin1')
-#     courses_list = pd.read_pickle(courses_pkl_path)
-#     # print(courses_list)
-
-# Load the courses.pkl file with error handling
-with open(courses_pkl_path, 'rb') as f:
-    try:
-        courses_list = pd.read_pickle(courses_pkl_path)
-        print(courses_list)
-        if courses_list.empty:
-            st.error("The courses list is empty.")
-        else:
-            # st.success("Courses loaded successfully.")
-            # Print out the courses_list to inspect its contents
-            print(courses_list.head())
-    except Exception as e:
-        st.error(f"Error loading courses list: {e}")
-
-similarity_path = os.path.join(current_directory, 'similarity.pkl')
-
-
-# Load the similarity.pkl file (similar error handling can be added)
-with open(similarity_path, 'rb') as f:
-    similarity = pickle.load(f)
 
 import mysql.connector
 import sqlite3
@@ -343,9 +313,7 @@ def recommended_course(courses):
 def courses():
     st.markdown("<h2 style='text-align: center; color: white;'>Course Recommendation System</h2>", unsafe_allow_html=True)
     
-    with open(courses_pkl_path, 'rb') as f:
-        courses_list = pd.read_pickle(courses_pkl_path)
-    
+
     if st.button('Show Recommended Courses'):
         st.write("Recommended Courses based on your interests are :")
         df,sorted=m.predict(st.session_state.username)
